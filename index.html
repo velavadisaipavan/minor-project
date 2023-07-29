@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather App javasript</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+  <div class="search">
+  <input type="text" placeholder="enter the city name" spellcheck="false">
+  <button><img src="https://ddc.downtowndevelopment.com/wp-content/uploads/2018/11/find-icon-png-17.png"></button>
+  </div>
+  <div class="weather">
+    <img src="https://cdn2.iconfinder.com/data/icons/weather-365/64/weather-sun-cloud-rain-512.png" class="weather-icon"> 
+    <h1 class="temp">22°c</h1>
+    <h2 class="city">INDIA</h2>
+    <div class="details">
+        <div class="col">
+          <img src="https://cdn4.iconfinder.com/data/icons/weather-182/24/weather_forcast_humidity_precipitation-512.png">
+          <div>
+            <p class="humidity">22°c</p>
+            <p>humidity</p>
+          </div>
+        </div>
+        <div class="col">
+          <img src="https://tse2.mm.bing.net/th?id=OIP.0xEV2J6WqybuUCLftelPPgHaFq&pid=Api&P=0&h=180">
+          <div>
+            <p class="wind">20km/h</p>
+            <p>wind speed</p>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+  <script>
+    const apikey ="a0f285621215e9cffe4e669f8b617bd8";
+    const apiurl ="https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}";
+    const searchbox= document.quaryselector(".search input");
+    const searchbtn= document.quaryselector(".search button");
+    const weathericon=document.queryselector("weather-icon");
+    async function checkweather(city){
+      const response = await fetch(apiurl + city + '&appid=${apikey}');
+      var data = await response.json();
+      console.log(data);
+      document.queryselector(".city").innerHTML=data.name;
+      document.queryselector(".temp").innerHTML=math.round(data.main.temp) + "°c";
+      document.queryselector(".humidity").innerHTML=data.main.humidity + "%";
+      document.queryselector(".wind").innerHTML=data.wind.speed + "km/h";
+      if(data.weather[0].main=="clouds"){
+        weathericon.src=""
+      }
+      document.querySelector(".weather").style.display="block";
+    }
+    searchbtn.addeventlistener("click",()=>{
+    checkweather(searchbox.value);
+    })
+  </script>
+</body>
+</html>
